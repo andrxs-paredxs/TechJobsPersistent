@@ -15,17 +15,34 @@ namespace TechJobsPersistent.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            List<Employer> employers = new List<Employer>();//list of employers
+            return View(employers);
         }
 
         public IActionResult Add()
         {
-            return View();
+            AddEmployerViewModel addEmployerViewModel = new AddEmployerViewModel();
+            return View(addEmployerViewModel);
         }
-
-        public IActionResult ProcessAddEmployerForm()
+        //[httppsot] model binding Employer
+        [HttpPost]
+        [Route("/add")]
+        public IActionResult Add(AddEmployerViewModel addEmployerViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                Employer newEmployer = new Employer
+                {
+                    Name = addEmployerViewModel.Name,
+                    Location = addEmployerViewModel.Location
+                };
+
+                //TODO: Add this new employer into the DB
+                //return View();
+                return Redirect("/Employer");
+            }
+
+            return View(addEmployerViewModel);
         }
 
         public IActionResult About(int id)
