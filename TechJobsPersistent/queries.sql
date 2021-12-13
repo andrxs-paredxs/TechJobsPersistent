@@ -27,4 +27,7 @@ TABLE jobskills(
 SELECT name FROM dbtechjobs.employers where Location="St. Louis City";
 
 --Part 3
-
+SELECT name, description 
+FROM skills
+WHERE id == jobskill.skillId
+ASC
