@@ -37,7 +37,7 @@ namespace TechJobsPersistent.Controllers
 
         //[httppsot] model binding Employer
         [HttpPost]
-        [Route("/add")]
+        [Route("Employer/Add")]
         public IActionResult Add(AddEmployerViewModel addEmployerViewModel)
         {
             if (ModelState.IsValid)

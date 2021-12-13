@@ -29,37 +29,53 @@ namespace TechJobsPersistent.Controllers
             return View(jobs);
         }
 
-        [HttpGet("/AddJob")]
+        //[HttpGet("/AddJob")]
         public IActionResult AddJob()
         {
             List<Employer> employers = context.Employers.ToList();
-            AddJobViewModel addJobViewModel = new AddJobViewModel(employers);
+            List<Skill> skills = context.Skills.ToList();
+
+            AddJobViewModel addJobViewModel = new AddJobViewModel(employers, skills);
 
             return View(addJobViewModel);
         }
 
-        [HttpPost]
-        [Route("/AddJob")]
-        public IActionResult ProcessAddJobForm( AddJobViewModel addJobViewModel)
+        [HttpPost]//("/ProcessAddJobForm")]
+        //[Route("/Home/AddJob")]
+        public IActionResult ProcessAddJobForm( AddJobViewModel addJobViewModel, string[] selectedSkills)
         {
             if (ModelState.IsValid) {
-                //TODO: Add a new job here 
+                
                 Employer theEmployer = context.Employers.Find(addJobViewModel.EmployerId);
                 Job newJob = new Job
                 {
                     Name = addJobViewModel.Name,
                     EmployerId = addJobViewModel.EmployerId,
-                    
                 };
 
                 context.Jobs.Add(newJob);
                 context.SaveChanges();
 
-                return Redirect("/Home");
+                int newJobId = context.Jobs.Max(p => p.Id);
+                
+                foreach (string skillId in selectedSkills) {
+                    JobSkill jobSkill = new JobSkill
+                    {
+                        JobId = newJobId,
+                        SkillId = Int16.Parse(skillId)
+                    };
+                    context.JobSkills.Add(jobSkill);
+                }
+
+                context.SaveChanges();
+                
+                return Redirect("/Home/");
             }
 
             //TODO: Check the routes for validation
-            return Redirect("/AddJob");
+            return View("/Home/AddJob",addJobViewModel);
+            //return View("AddJob", addJobViewModel);
+            //return Redirect("/AddJob");
         }
 
         public IActionResult Detail(int id)

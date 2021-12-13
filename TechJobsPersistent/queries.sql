@@ -24,6 +24,7 @@ TABLE jobskills(
 
 
 --Part 2
+SELECT name FROM dbtechjobs.employers where Location="St. Louis City";
 
 --Part 3
 
