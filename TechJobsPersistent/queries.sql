@@ -16,7 +16,7 @@ TABLE jobskills(
 	SkillId INTEGER
 )
 
-TABLE jobskills(
+TABLE Skills(
 	Id INTEGER PRIMARY KEY AUTO_INCREMENT,
 	Description LONGTEXT,
 	Name LONGTEXT
@@ -27,7 +27,8 @@ TABLE jobskills(
 SELECT name FROM dbtechjobs.employers where Location="St. Louis City";
 
 --Part 3
-SELECT name, description 
+SELECT jobskills.SkillId, skills.Name, skills.Description
 FROM skills
-WHERE id == jobskill.skillId
-ASC
+INNER JOIN jobskills 
+ON jobskills.SkillId = skills.Id
+ORDER BY skills.Name ASC

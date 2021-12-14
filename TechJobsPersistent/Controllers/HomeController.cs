@@ -42,6 +42,8 @@ namespace TechJobsPersistent.Controllers
 
         [HttpPost]
         [Route("Home/AddJob")]
+        [Route("/AddJob")]
+        //[Route("Home/AddJob")]
         public IActionResult AddJob( AddJobViewModel addJobViewModel, string[] selectedSkills)
         {
             if (ModelState.IsValid) {
